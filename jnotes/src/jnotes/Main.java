@@ -48,8 +48,10 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
             	//System.out.println(System.getProperty("user.home"));
             	
+            	new Note();
+            	
             	File f = new File(userNotesPath+"/data/1234.jnote");
-
+            	
                 try {
 					BufferedReader fin = new BufferedReader(new FileReader(f));
 					try {
