@@ -9,9 +9,11 @@ import javax.swing.*;
 
 
 public class Main {
-
+	
 	public static void main(String[] args) {
+		// Проверяем созданы ли все директории, если нет, то создаем
 		final String userNotesPath = System.getProperty("user.home")+"/.jnotes";
+		final String userNotesDataPath = System.getProperty("user.home")+"/.jnotes/data";
 		
 		File userNotesDir = new File(userNotesPath);
 		if (!userNotesDir.exists()) {
@@ -19,9 +21,17 @@ public class Main {
 		    userNotesDir.mkdir();
 		}
 		
+		File userNotesDataDir = new File(userNotesDataPath);
+		if (!userNotesDataDir.exists()) {
+		    System.out.println("creating directory: " + userNotesDataPath);
+		    userNotesDataDir.mkdir();
+		}
+		
+		
+		// Помещаем иконку в трэе
 		final TrayIcon trayIcon = new TrayIcon(createImage("resources/icon.png", "tray icon"));
-        final SystemTray tray = SystemTray.getSystemTray();
-        trayIcon.setImageAutoSize(true);
+		final SystemTray tray = SystemTray.getSystemTray();
+		trayIcon.setImageAutoSize(true);
         
         try {
             tray.add(trayIcon);
@@ -32,41 +42,63 @@ public class Main {
         
         // Create a default popup menu components
         final PopupMenu popup = new PopupMenu();
+        
+        MenuItem newNote = new MenuItem("New note");
+        MenuItem optionsItem = new MenuItem("Options");
         MenuItem exitItem = new MenuItem("Exit");
         
-        // Убрать потом
-        MenuItem intItem = new MenuItem("Check IT");
-        popup.add(intItem);
-        
+        popup.add(newNote);
         popup.addSeparator();
-        popup.add(exitItem);
-        trayIcon.setPopupMenu(popup);
         
+        // Динамическое меню
         
-        // Для разных проверок
-        intItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	//System.out.println(System.getProperty("user.home"));
-            	
-            	File f = new File(userNotesPath+"/data/1234.jnote");
-
-                try {
+        String noteFileName;
+        String mnu;
+        
+        File folder = new File(userNotesPath+"/data");
+    	File[] listOfFiles = folder.listFiles();
+    	for (int i = 0; i < listOfFiles.length; i++) {
+    		if (listOfFiles[i].isFile()) {
+    			noteFileName = listOfFiles[i].getName();
+    			File f = new File(userNotesPath+"/data/"+noteFileName);
+    			try {
 					BufferedReader fin = new BufferedReader(new FileReader(f));
 					try {
-						// Вывод первой строки
-						System.out.println(fin.readLine());
+						// mnu = первоя строка заметки
+						mnu = fin.readLine();
+						MenuItem menuItem = new MenuItem (mnu);
+						menuItem.setName("dsf");
+						popup.add(menuItem);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
-            }
-        });
+    		}
+    	}
+    	
+    	
+        popup.addSeparator();
+        popup.add(optionsItem);
+        popup.addSeparator();
+        popup.add(exitItem);
         
+        trayIcon.setPopupMenu(popup);
+        
+        // Проверка
+        popup.getItem(0).addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		System.out.println(popup.getItem(0).getName());
+        	}
+        });
+
         trayIcon.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"This dialog box is run from System Tray");
+                //JOptionPane.showMessageDialog(null,"Управление правой кнопкой мышки!");
+            	
+            	new Note();
+            	
             }
         });
         
@@ -76,6 +108,7 @@ public class Main {
                 System.exit(0);
             }
         });
+        
 	}
 	
 	//Obtain the image URL
