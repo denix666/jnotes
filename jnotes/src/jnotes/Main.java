@@ -47,9 +47,9 @@ public class Main {
         
         trayIcon.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //JOptionPane.showMessageDialog(null,"Управление правой кнопкой мышки!");
+                JOptionPane.showMessageDialog(null,"Управление правой кнопкой мышки!");
             	
-            	new Note();
+            	//new Note();
             	
             }
         });
@@ -82,11 +82,11 @@ public class Main {
 						final MenuItem menuItem = new MenuItem (noteName);
 						menuItem.setName(noteFileName);
 						popup.add(menuItem);
-						
 						menuItem.addActionListener(new ActionListener() {
-							@Override
 							public void actionPerformed(ActionEvent e) {
-			            		System.out.println(menuItem.getName());
+			            		// Новое окошко с параметром имени заметки
+								UIManager.put("swing.boldMetal", Boolean.FALSE);
+								new Note(menuItem.getName());
 			            	}
 			            });
 					} catch (IOException e1) {
