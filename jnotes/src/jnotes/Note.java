@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -74,14 +76,12 @@ public class Note extends JPanel{
 	    	@Override
             public void windowClosing(WindowEvent e) {
 	    		
-	    		framePosX=frame.getX();
+	    		data=noteName+"\n"+frame.getX()+"\n"+frame.getY()+"\n";
 	    		
 	    		FileWriter fileWriter;
 				try {
 					fileWriter = new FileWriter(note);
-					fileWriter.write(noteName+"\n");
-					fileWriter.append(frame.getX());
-					fileWriter.append(frame.getY());
+					fileWriter.write(data);
 					fileWriter.append(display.getText());
 					fileWriter.close();
 				} catch (IOException e1) {
@@ -89,5 +89,11 @@ public class Note extends JPanel{
 				}
             }
         });
+	    
+	    middlePanel.addMouseListener(new MouseAdapter() {
+	    	public void mousePressed(MouseEvent me) {
+	    		System.out.println("Click");
+	    	}
+	    });
 	}
 }

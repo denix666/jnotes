@@ -47,7 +47,8 @@ public class Main {
         
         trayIcon.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Управление правой кнопкой мышки!");
+            	UIManager.put("swing.boldMetal", Boolean.FALSE);
+            	JOptionPane.showMessageDialog(null,"Управление правой кнопкой мышки!");
             	
             	//new Note();
             	
