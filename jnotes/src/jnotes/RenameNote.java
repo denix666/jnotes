@@ -1,11 +1,9 @@
 package jnotes;
 
-import java.awt.Color;
+
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,7 +15,6 @@ public class RenameNote extends JFrame {
 	JPanel panel = new JPanel();
 	public JTextField txtField = new JTextField();
 	JButton btn = new JButton();
-	
 	
 	public RenameNote(String noteName) {
 		//panel.setBackground(Color.pink);
@@ -41,9 +38,9 @@ public class RenameNote extends JFrame {
 		btn.addMouseListener(new MouseAdapter() {
 	    	public void mousePressed(MouseEvent me) {
 	    		UIManager.put("swing.boldMetal", Boolean.FALSE);
-	    		setVisible(false);   		
+	    		Note.
+	    		setVisible(false);		
 	    	}
 	    });
 	}
-
 }

@@ -29,7 +29,7 @@ import javax.swing.border.TitledBorder;
 
 public class Note extends JPanel {
 	
-	JFrame frame = new JFrame();
+	public JFrame frame = new JFrame();
 	JPanel middlePanel = new JPanel();
 	JTextArea display = new JTextArea(20,40);
 	String noteName = null;
@@ -106,8 +106,7 @@ public class Note extends JPanel {
 	    middlePanel.addMouseListener(new MouseAdapter() {
 	    	public void mousePressed(MouseEvent me) {
 	    		UIManager.put("swing.boldMetal", Boolean.FALSE);
-	    		RenameNote rnote = new RenameNote(noteName);
-	    		System.out.println(rnote.txtField.getText());
+	    		new RenameNote(noteName);
 	    	}
 	    });
 	}
