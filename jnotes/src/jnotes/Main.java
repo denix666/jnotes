@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.*;
 
@@ -27,33 +29,45 @@ public class Main {
             System.exit(1);
         }
         
-        // Create a default popup menu components
-        MenuItem newNote = new MenuItem("New note");
-        MenuItem optionsItem = new MenuItem("Options");
-        MenuItem exitItem = new MenuItem("Exit");
         
-        popup.add(newNote);
-        popup.addSeparator();
-        
-        // Динамическое меню
+        firstPartOfMenu();
         dynamicMenu();
-          
-        popup.addSeparator();
-        popup.add(optionsItem);
-        popup.addSeparator();
-        popup.add(exitItem);
+        secondPartOfMenu();
+        
         
         trayIcon.setPopupMenu(popup);
         
         trayIcon.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UIManager.put("swing.boldMetal", Boolean.FALSE);
-            	JOptionPane.showMessageDialog(null,"Управление правой кнопкой мышки!");
-            	
-            	//new Note();
-            	
+            	JOptionPane.showMessageDialog(null,"Control with right mouse click!");
             }
         });
+	}
+	
+	public static void firstPartOfMenu() {
+		// Create a default popup menu components
+        MenuItem newNote = new MenuItem("New note");
+        popup.add(newNote);
+        popup.addSeparator();
+        
+        newNote.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	UIManager.put("swing.boldMetal", Boolean.FALSE);
+            	Date date = new Date();
+            	String newNote = new SimpleDateFormat("YYYYMMddHHmmss").format(date);
+            	new Note(newNote+".jnote");
+            }
+        });
+	}
+	
+	public static void secondPartOfMenu() {
+		MenuItem optionsItem = new MenuItem("Options");
+        MenuItem exitItem = new MenuItem("Exit");
+        popup.addSeparator();
+        popup.add(optionsItem);
+        popup.addSeparator();
+        popup.add(exitItem);
         
         exitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -63,8 +77,7 @@ public class Main {
         });
 	}
 	
-	
-	protected static void dynamicMenu() {
+	public static void dynamicMenu() {
 		String noteFileName;
         String noteName;
         
@@ -80,7 +93,7 @@ public class Main {
 					try {
 						// noteName = первоя строка заметки т.е будет как ее заголовок
 						noteName = fin.readLine();
-						final MenuItem menuItem = new MenuItem (noteName);
+						final MenuItem menuItem = new MenuItem(noteName);
 						menuItem.setName(noteFileName);
 						popup.add(menuItem);
 						menuItem.addActionListener(new ActionListener() {

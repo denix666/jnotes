@@ -2,6 +2,7 @@ package jnotes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.MenuItem;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -33,17 +35,24 @@ public class Note extends JPanel{
 	String noteName = null;
 	String data = null;
 	String framePosX, framePosY = null;
+	String frameSizeX, frameSizeY = null;
+	int x,y = 0;
 	
 	public Note(String noteFileName) {
 		
 		
 		final File note = new File(Main.userNotesPath+"/data/"+noteFileName);
+		if (!note.isFile()) {
+			createNewNote(noteFileName);
+		}
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(note));
 			try {
 				noteName = br.readLine();
 				framePosX = br.readLine();
 				framePosY = br.readLine();
+				frameSizeX = br.readLine();
+				frameSizeY = br.readLine();
 				while ((data = br.readLine()) != null) {
 					display.append(data+"\n");
 				}
@@ -54,10 +63,9 @@ public class Note extends JPanel{
 			e1.printStackTrace();
 		}
 
-
+		frame.setTitle(noteName);
 	    middlePanel.setBorder(new TitledBorder(new EtchedBorder(),noteName));
 	    middlePanel.setLayout(new BorderLayout());
-	    
 	    display.setEditable(true);
 	    display.setBackground(Color.ORANGE);
 	    JScrollPane scroll = new JScrollPane(display);
@@ -65,18 +73,23 @@ public class Note extends JPanel{
 	    middlePanel.add (scroll,BorderLayout.CENTER);
 	    frame.add(middlePanel);
 	    frame.pack();
-	    int x = Integer.parseInt(framePosX);
-	    int y = Integer.parseInt(framePosY);
+	    // Восстанавливаем положение
+	    x = Integer.parseInt(frameSizeX);
+	    y = Integer.parseInt(frameSizeY);
+	    frame.setSize(x, y);
+	    // Восстанавливаем размеры
+	    x = Integer.parseInt(framePosX);
+	    y = Integer.parseInt(framePosY);
 	    frame.setLocation(x, y);
 	    frame.setVisible(true);
 	    
-	    
+
 	    frame.addWindowListener(new WindowAdapter() {
 
 	    	@Override
             public void windowClosing(WindowEvent e) {
 	    		
-	    		data=noteName+"\n"+frame.getX()+"\n"+frame.getY()+"\n";
+	    		data=noteName+"\n"+frame.getX()+"\n"+frame.getY()+"\n"+frame.getSize().width+"\n"+frame.getSize().height+"\n";
 	    		
 	    		FileWriter fileWriter;
 				try {
@@ -92,8 +105,30 @@ public class Note extends JPanel{
 	    
 	    middlePanel.addMouseListener(new MouseAdapter() {
 	    	public void mousePressed(MouseEvent me) {
-	    		System.out.println("Click");
+	    		frame.setTitle(noteName);	    		
 	    	}
 	    });
+	}
+	
+	public void createNewNote(String noteFileName) {
+		final File newNote = new File(Main.userNotesPath+"/data/"+noteFileName);
+		
+		data="noname note\n300\n300\n300\n300\n";
+		
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter(newNote);
+			fileWriter.write(data);
+			fileWriter.append(display.getText());
+			fileWriter.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		Main.popup.removeAll();
+		Main.firstPartOfMenu();
+		Main.dynamicMenu();
+		Main.secondPartOfMenu();
+		
 	}
 }
