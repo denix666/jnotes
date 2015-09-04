@@ -27,7 +27,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 
-public class Note extends JPanel{
+public class Note extends JPanel {
 	
 	JFrame frame = new JFrame();
 	JPanel middlePanel = new JPanel();
@@ -105,7 +105,9 @@ public class Note extends JPanel{
 	    
 	    middlePanel.addMouseListener(new MouseAdapter() {
 	    	public void mousePressed(MouseEvent me) {
-	    		frame.setTitle(noteName);	    		
+	    		UIManager.put("swing.boldMetal", Boolean.FALSE);
+	    		RenameNote rnote = new RenameNote(noteName);
+	    		System.out.println(rnote.txtField.getText());
 	    	}
 	    });
 	}
