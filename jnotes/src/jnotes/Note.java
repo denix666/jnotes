@@ -2,10 +2,6 @@ package jnotes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.MenuItem;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -40,8 +36,9 @@ public class Note extends JPanel {
 	
 	public Note(String noteFileName) {
 		
-		
+		final String noteFile = noteFileName;
 		final File note = new File(Main.userNotesPath+"/data/"+noteFileName);
+		
 		if (!note.isFile()) {
 			createNewNote(noteFileName);
 		}
@@ -88,33 +85,40 @@ public class Note extends JPanel {
 
 	    	@Override
             public void windowClosing(WindowEvent e) {
-	    		
-	    		data=noteName+"\n"+frame.getX()+"\n"+frame.getY()+"\n"+frame.getSize().width+"\n"+frame.getSize().height+"\n";
-	    		
-	    		FileWriter fileWriter;
-				try {
-					fileWriter = new FileWriter(note);
-					fileWriter.write(data);
-					fileWriter.append(display.getText());
-					fileWriter.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+	    		saveNote(noteFile);
             }
         });
 	    
 	    middlePanel.addMouseListener(new MouseAdapter() {
 	    	public void mousePressed(MouseEvent me) {
 	    		UIManager.put("swing.boldMetal", Boolean.FALSE);
-	    		new RenameNote(noteName);
+	    		saveNote(noteFile);
+	    		new RenameNote(noteFile);
+	    		frame.setVisible(false);
 	    	}
 	    });
+	}
+	
+	public void saveNote(String noteFileName)  {
+		final File noteToSave = new File(Main.userNotesPath+"/data/"+noteFileName);
+		
+		data=noteName+"\n"+frame.getX()+"\n"+frame.getY()+"\n"+frame.getSize().width+"\n"+frame.getSize().height+"\n";
+		
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter(noteToSave);
+			fileWriter.write(data);
+			fileWriter.append(display.getText());
+			fileWriter.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 	public void createNewNote(String noteFileName) {
 		final File newNote = new File(Main.userNotesPath+"/data/"+noteFileName);
 		
-		data="noname note\n300\n300\n300\n300\n";
+		data="noname note\n600\n330\n500\n350\n";
 		
 		FileWriter fileWriter;
 		try {
