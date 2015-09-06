@@ -18,7 +18,6 @@ public class Main {
 	final static SystemTray tray = SystemTray.getSystemTray();
 	final static String version = "0.1";
 	
-	
 	public static void main(String[] args) {
 		initDataDir();
 		
