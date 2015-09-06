@@ -134,6 +134,5 @@ public class Note extends JPanel {
 		Main.firstPartOfMenu();
 		Main.dynamicMenu();
 		Main.secondPartOfMenu();
-		
 	}
 }

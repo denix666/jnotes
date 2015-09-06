@@ -16,6 +16,8 @@ public class Main {
 	final static PopupMenu popup = new PopupMenu();
 	final static TrayIcon trayIcon = new TrayIcon(createImage("resources/icon.png", "tray icon"));
 	final static SystemTray tray = SystemTray.getSystemTray();
+	final static String version = "0.1";
+	
 	
 	public static void main(String[] args) {
 		initDataDir();
@@ -62,10 +64,16 @@ public class Main {
 	}
 	
 	public static void secondPartOfMenu() {
+		UIManager.put("swing.boldMetal", Boolean.FALSE);
+		final About about = new About();
+		
 		MenuItem optionsItem = new MenuItem("Options");
+		MenuItem aboutItem = new MenuItem("About");
         MenuItem exitItem = new MenuItem("Exit");
         popup.addSeparator();
         popup.add(optionsItem);
+        popup.addSeparator();
+        popup.add(aboutItem);
         popup.addSeparator();
         popup.add(exitItem);
         
@@ -73,6 +81,12 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 tray.remove(trayIcon);
                 System.exit(0);
+            }
+        });
+        
+        aboutItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                about.setVisible(true);
             }
         });
 	}
@@ -88,6 +102,7 @@ public class Main {
     		if (listOfFiles[i].isFile()) {
     			noteFileName = listOfFiles[i].getName();
     			File f = new File(userNotesPath+"/data/"+noteFileName);
+    			
     			try {
 					BufferedReader fin = new BufferedReader(new FileReader(f));
 					try {
@@ -112,6 +127,7 @@ public class Main {
     		}
     	}
 	}
+	
 	
 	// Obtain the image URL
     protected static Image createImage(String path, String description) {
