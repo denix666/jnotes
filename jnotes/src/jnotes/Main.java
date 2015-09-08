@@ -16,7 +16,7 @@ public class Main {
 	final static PopupMenu popup = new PopupMenu();
 	final static TrayIcon trayIcon = new TrayIcon(createImage("resources/icon.png", "tray icon"));
 	final static SystemTray tray = SystemTray.getSystemTray();
-	final static String version = "0.1";
+	final static String version = "0.2";
 	
 	public static void main(String[] args) {
 		initDataDir();

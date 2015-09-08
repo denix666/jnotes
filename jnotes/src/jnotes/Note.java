@@ -2,7 +2,6 @@ package jnotes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -101,7 +99,6 @@ public class Note extends JPanel {
             }
         });
 	    
-
 	    display.addMouseListener(new MouseAdapter() {
 			 
 	        @Override
@@ -178,5 +175,15 @@ public class Note extends JPanel {
             }
         });
 		notePopup.add(renameNote);
+		
+		JMenuItem deleteNote = new JMenuItem("Delete",new ImageIcon(this.getClass().getResource("resources/delete_icon.png")));
+		deleteNote.setMnemonic(KeyEvent.VK_P);
+		deleteNote.getAccessibleContext().setAccessibleDescription("Delete");
+		deleteNote.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	System.out.println("Delete requested");
+            }
+        });
+		notePopup.add(deleteNote);
 	}
 }
