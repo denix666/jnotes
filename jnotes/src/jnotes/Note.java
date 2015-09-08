@@ -2,6 +2,10 @@ package jnotes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -12,20 +16,26 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
 
 
 public class Note extends JPanel {
 	
 	public JFrame frame = new JFrame();
+	JPopupMenu notePopup = new JPopupMenu();
 	JPanel middlePanel = new JPanel();
 	JTextArea display = new JTextArea(20,40);
 	String noteName = null;
@@ -34,10 +44,12 @@ public class Note extends JPanel {
 	String frameSizeX, frameSizeY = null;
 	int x,y = 0;
 	
-	public Note(String noteFileName) {
-		
-		final String noteFile = noteFileName;
+	public Note(final String noteFileName) {
+
 		final File note = new File(Main.userNotesPath+"/data/"+noteFileName);
+		
+		createPopupMenu(noteFileName);
+		
 		
 		if (!note.isFile()) {
 			createNewNote(noteFileName);
@@ -61,7 +73,7 @@ public class Note extends JPanel {
 		}
 
 		frame.setTitle(noteName);
-	    middlePanel.setBorder(new TitledBorder(new EtchedBorder(),noteName));
+	    middlePanel.setBorder(new TitledBorder(new EtchedBorder(),""));
 	    middlePanel.setLayout(new BorderLayout());
 	    display.setEditable(true);
 	    display.setBackground(Color.ORANGE);
@@ -82,20 +94,31 @@ public class Note extends JPanel {
 	    
 
 	    frame.addWindowListener(new WindowAdapter() {
-
+	    	
 	    	@Override
             public void windowClosing(WindowEvent e) {
-	    		saveNote(noteFile);
+	    		saveNote(noteFileName);
             }
         });
 	    
-	    middlePanel.addMouseListener(new MouseAdapter() {
-	    	public void mousePressed(MouseEvent me) {
-	    		UIManager.put("swing.boldMetal", Boolean.FALSE);
-	    		saveNote(noteFile);
-	    		new RenameNote(noteFile);
-	    		frame.setVisible(false);
-	    	}
+
+	    display.addMouseListener(new MouseAdapter() {
+			 
+	        @Override
+	        public void mousePressed(MouseEvent e) {
+	            showPopup(e);
+	        }
+
+	        @Override
+	        public void mouseReleased(MouseEvent e) {
+	            showPopup(e);
+	        }
+
+	        private void showPopup(MouseEvent e) {
+	            if (e.isPopupTrigger()) {
+	            	notePopup.show(e.getComponent(), e.getX(), e.getY());
+	            }
+	        }
 	    });
 	}
 	
@@ -134,5 +157,26 @@ public class Note extends JPanel {
 		Main.firstPartOfMenu();
 		Main.dynamicMenu();
 		Main.secondPartOfMenu();
+	}
+	
+	public void createPopupMenu(final String noteFile) {
+		JMenuItem renameNote = new JMenuItem("Rename",new ImageIcon(this.getClass().getResource("resources/rename_icon.png")));
+		renameNote.setMnemonic(KeyEvent.VK_P);
+		renameNote.getAccessibleContext().setAccessibleDescription("Rename");
+		renameNote.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	String s = (String)JOptionPane.showInputDialog (null, "Enter new note name:", "Rename note", JOptionPane.PLAIN_MESSAGE,null, null,noteName);
+            	if (s != null) {
+            		frame.setTitle(s);
+            		noteName = s;
+            		saveNote(noteFile);
+            		Main.popup.removeAll();
+            		Main.firstPartOfMenu();
+            		Main.dynamicMenu();
+            		Main.secondPartOfMenu();
+            	}
+            }
+        });
+		notePopup.add(renameNote);
 	}
 }
