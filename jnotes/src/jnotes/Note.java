@@ -162,7 +162,15 @@ public class Note extends JPanel {
 		renameNote.getAccessibleContext().setAccessibleDescription("Rename");
 		renameNote.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	String s = (String)JOptionPane.showInputDialog (null, "Enter new note name:", "Rename note", JOptionPane.PLAIN_MESSAGE,null, null,noteName);
+            	String s = (String)JOptionPane.showInputDialog (
+            			null, 
+            			"Enter new note name:", 
+            			"Rename note", 
+            			JOptionPane.PLAIN_MESSAGE,
+            			null, 
+            			null,
+            			noteName);
+            	
             	if (s != null) {
             		frame.setTitle(s);
             		noteName = s;
@@ -176,12 +184,32 @@ public class Note extends JPanel {
         });
 		notePopup.add(renameNote);
 		
+		notePopup.addSeparator();
+		
+		JMenuItem copyToClipboard = new JMenuItem("Copy",new ImageIcon(this.getClass().getResource("resources/copy_icon.png")));
+		copyToClipboard.setMnemonic(KeyEvent.VK_P);
+		copyToClipboard.getAccessibleContext().setAccessibleDescription("Copy");
+		notePopup.add(copyToClipboard);
+		
+		JMenuItem pasteFromClipboard = new JMenuItem("Paste",new ImageIcon(this.getClass().getResource("resources/paste_icon.png")));
+		pasteFromClipboard.setMnemonic(KeyEvent.VK_P);
+		pasteFromClipboard.getAccessibleContext().setAccessibleDescription("Paste");
+		notePopup.add(pasteFromClipboard);
+		
+		notePopup.addSeparator();
+		
 		JMenuItem deleteNote = new JMenuItem("Delete",new ImageIcon(this.getClass().getResource("resources/delete_icon.png")));
 		deleteNote.setMnemonic(KeyEvent.VK_P);
 		deleteNote.getAccessibleContext().setAccessibleDescription("Delete");
 		deleteNote.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	System.out.println("Delete requested");
+            	int n = JOptionPane.showConfirmDialog(
+            		    frame,
+            		    "Are you sure want to delete note: "+noteName+" ?",
+            		    "WARNING!!!",
+            		    JOptionPane.YES_NO_OPTION);
+            	
+            	System.out.println(n);
             }
         });
 		notePopup.add(deleteNote);
