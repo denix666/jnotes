@@ -16,11 +16,13 @@ public class Main {
 	final static PopupMenu popup = new PopupMenu();
 	final static TrayIcon trayIcon = new TrayIcon(createImage("resources/icon.png", "tray icon"));
 	final static SystemTray tray = SystemTray.getSystemTray();
-	final static String version = "0.2";
+	final static String version = "0.3";
+	final static About about = new About();
+	
 	
 	public static void main(String[] args) {
 		initDataDir();
-		
+
 		// Помещаем иконку в трэе
 		trayIcon.setImageAutoSize(true);
         try {
@@ -64,7 +66,7 @@ public class Main {
 	
 	public static void secondPartOfMenu() {
 		UIManager.put("swing.boldMetal", Boolean.FALSE);
-		final About about = new About();
+		
 		
 		MenuItem optionsItem = new MenuItem("Options");
 		MenuItem aboutItem = new MenuItem("About");
@@ -86,6 +88,7 @@ public class Main {
         aboutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 about.setVisible(true);
+                //System.out.println("asdf");
             }
         });
 	}
