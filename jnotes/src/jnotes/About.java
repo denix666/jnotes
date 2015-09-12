@@ -11,6 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 
 
+@SuppressWarnings("serial")
 public class About extends JDialog {
 	JLabel background = new JLabel(new ImageIcon(this.getClass().getResource("resources/bg.jpg")));
 	JLabel lbl1 = new JLabel();

@@ -36,6 +36,7 @@ import javax.swing.border.TitledBorder;
 
 
 
+@SuppressWarnings("serial")
 public class Note extends JPanel {
 	
 	public JFrame frame = new JFrame();
@@ -69,6 +70,7 @@ public class Note extends JPanel {
 				while ((data = br.readLine()) != null) {
 					display.append(data+"\n");
 				}
+				br.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
