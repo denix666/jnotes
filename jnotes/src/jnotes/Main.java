@@ -14,7 +14,6 @@ public class Main {
 	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-	    //UIManager.put("MenuItem.selectionForeground", Color.GREEN);
 	    UIManager.put("MenuItem.selectionBackground", Color.YELLOW);
 	    UIManager.put("swing.boldMetal", Boolean.FALSE);
 	    

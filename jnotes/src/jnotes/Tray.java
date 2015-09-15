@@ -98,6 +98,8 @@ public class Tray {
         aboutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 about.setVisible(true);
+                about.toFront();
+                about.repaint();
                 popup.setVisible(false);
             }
         });

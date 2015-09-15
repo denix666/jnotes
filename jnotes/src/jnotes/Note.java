@@ -22,6 +22,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.ImageIcon;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -43,10 +44,11 @@ public class Note extends JPanel {
 	JPanel middlePanel = new JPanel();
 	JTextArea display = new JTextArea(20,40);
 	String noteName = null;
-	String data = null;
+	String data, noteColor = null;
 	String framePosX, framePosY = null;
 	String frameSizeX, frameSizeY = null;
 	int x,y = 0;
+	Color displayColor = null;
 	
 	public Note(final String noteFileName) {
 
@@ -62,6 +64,7 @@ public class Note extends JPanel {
 			BufferedReader br = new BufferedReader(new FileReader(note));
 			try {
 				noteName = br.readLine();
+				noteColor = br.readLine();
 				framePosX = br.readLine();
 				framePosY = br.readLine();
 				frameSizeX = br.readLine();
@@ -81,7 +84,8 @@ public class Note extends JPanel {
 	    middlePanel.setBorder(new TitledBorder(new EtchedBorder(),""));
 	    middlePanel.setLayout(new BorderLayout());
 	    display.setEditable(true);
-	    display.setBackground(Color.ORANGE);
+	    display.setBackground(Color.decode(noteColor));
+	    //display.setBackground(Color.ORANGE);
 	    JScrollPane scroll = new JScrollPane(display);
 	    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	    middlePanel.add (scroll,BorderLayout.CENTER);
@@ -129,7 +133,7 @@ public class Note extends JPanel {
 	public void saveNote(String noteFileName)  {
 		final File noteToSave = new File(Main.userNotesPath+"/data/"+noteFileName);
 		
-		data=noteName+"\n"+frame.getX()+"\n"+frame.getY()+"\n"+frame.getSize().width+"\n"+frame.getSize().height+"\n";
+		data=noteName+"\n"+display.getBackground().getRGB()+"\n"+frame.getX()+"\n"+frame.getY()+"\n"+frame.getSize().width+"\n"+frame.getSize().height+"\n";
 		
 		FileWriter fileWriter;
 		try {
@@ -145,7 +149,7 @@ public class Note extends JPanel {
 	public void createNewNote(String noteFileName) {
 		final File newNote = new File(Main.userNotesPath+"/data/"+noteFileName);
 		
-		data="noname note\n600\n330\n500\n350\n";
+		data="noname note\n-154\n600\n330\n500\n350\n";
 		
 		FileWriter fileWriter;
 		try {
@@ -185,6 +189,22 @@ public class Note extends JPanel {
             }
         });
 		notePopup.add(renameNote);
+		
+		notePopup.addSeparator();
+		
+		JMenuItem setColor = new JMenuItem("Set color",new ImageIcon(this.getClass().getResource("resources/color_icon.png")));
+		setColor.setMnemonic(KeyEvent.VK_P);
+		setColor.getAccessibleContext().setAccessibleDescription("Set color");
+		setColor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	Color selectedColor = JColorChooser.showDialog(
+            			null, 
+            			"Pick a Color", 
+            			Color.YELLOW);
+            	display.setBackground(selectedColor);
+            }
+        });
+		notePopup.add(setColor);
 		
 		notePopup.addSeparator();
 		
