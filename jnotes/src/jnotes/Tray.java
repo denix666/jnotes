@@ -122,6 +122,7 @@ public class Tray {
 	public static void dynamicMenu() {
 		String noteFileName;
         String noteName;
+        String noteColor;
         
         File folder = new File(Main.userNotesPath+"/data");
     	File[] listOfFiles = folder.listFiles();
@@ -136,8 +137,9 @@ public class Tray {
 					try {
 						// noteName = первоя строка заметки т.е будет как ее заголовок
 						noteName = fin.readLine();
+						noteColor = fin.readLine();
 						fin.close();
-						final JMenuItem menuItem = new JMenuItem(noteName);
+						final JMenuItem menuItem = new JMenuItem(noteName,new ColorIcon(noteColor));
 						menuItem.setMnemonic(KeyEvent.VK_P);
 						menuItem.getAccessibleContext().setAccessibleDescription(noteName);
 						menuItem.setName(noteFileName);
