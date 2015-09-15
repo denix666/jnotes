@@ -49,6 +49,7 @@ public class Note extends JPanel {
 	String frameSizeX, frameSizeY = null;
 	int x,y = 0;
 	Color displayColor = null;
+	Img frameIcon = new Img("icon.png");
 	
 	public Note(final String noteFileName) {
 
@@ -81,6 +82,7 @@ public class Note extends JPanel {
 		}
 
 		frame.setTitle(noteName);
+		frame.setIconImage(frameIcon.img);
 	    middlePanel.setBorder(new TitledBorder(new EtchedBorder(),""));
 	    middlePanel.setLayout(new BorderLayout());
 	    display.setEditable(true);
