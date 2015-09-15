@@ -21,7 +21,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -266,9 +265,9 @@ public class Note extends JPanel {
 	}
 	
 	public void recreatePopupMenu() {
-		Main.popup.removeAll();
-		Main.firstPartOfMenu();
-		Main.dynamicMenu();
-		Main.secondPartOfMenu();
+		Tray.popup.removeAll();
+		Tray.firstPartOfMenu();
+		Tray.dynamicMenu();
+		Tray.secondPartOfMenu();
 	}
 }
