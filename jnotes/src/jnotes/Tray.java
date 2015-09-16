@@ -35,7 +35,7 @@ public class Tray {
 	
 	
 	Tray() {
-		trayIcon.setToolTip("JNotes");
+		trayIcon.setToolTip("JNotes v" + Main.version);
 		trayIcon.setImageAutoSize(true);
 		try {
 			tray.add(trayIcon);
@@ -45,14 +45,23 @@ public class Tray {
 		}
 		
 		trayIcon.addMouseListener(new MouseAdapter() {
-	    	@Override
-	    	public void mousePressed(MouseEvent e) {
-	    		if (e.isPopupTrigger()) {
-	    			popup.setLocation(e.getX(), e.getY());
+			@Override
+	        public void mousePressed(MouseEvent e) {
+	            showPopup(e);
+	        }
+
+	        @Override
+	        public void mouseReleased(MouseEvent e) {
+	            showPopup(e);
+	        }
+
+	        private void showPopup(MouseEvent e) {
+	            if (e.isPopupTrigger()) {
+	            	popup.setLocation(e.getX(), e.getY());
 	    			popup.setInvoker(popup);
 	    			popup.setVisible(true);
-	    		}
-	    	}
+	            }
+	        }
 	    });
 	}
 
