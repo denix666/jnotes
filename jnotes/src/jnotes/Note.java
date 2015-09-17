@@ -61,6 +61,7 @@ public class Note extends JPanel {
 		if (!note.isFile()) {
 			createNewNote(noteFileName);
 		}
+		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(note));
 			try {

@@ -32,7 +32,7 @@ public class Tray {
 	final static ImageIcon new_icon = new ImageIcon(createImage("resources/new_icon.png", "New note"));
 	final static ImageIcon hide_icon = new ImageIcon(createImage("resources/hide_icon.png", "Hide menu"));
 	final static About about = new About();
-	
+	final static Options options = new Options();
 	
 	Tray() {
 		trayIcon.setToolTip("JNotes v" + Main.version);
@@ -98,6 +98,16 @@ public class Tray {
         popup.addSeparator();
         
 		JMenuItem optionsItem = new JMenuItem("Options", options_icon);
+		optionsItem.setMnemonic(KeyEvent.VK_P);
+		optionsItem.getAccessibleContext().setAccessibleDescription("Options");
+		optionsItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                options.setVisible(true);
+                options.toFront();
+                options.repaint();
+                popup.setVisible(false);
+            }
+        });
 		popup.add(optionsItem);
 		popup.addSeparator();
         
