@@ -1,11 +1,11 @@
 package jnotes;
 
-import java.awt.Color;
+
 import java.io.File;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-@SuppressWarnings("unused")
+
 public class Main {
 	final static String userNotesPath = System.getProperty("user.home")+"/.jnotes";
 	final static String userNotesDataPath = System.getProperty("user.home")+"/.jnotes/data";

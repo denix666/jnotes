@@ -19,14 +19,15 @@ import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class About extends JDialog {
-	JLabel background = new JLabel(new ImageIcon(this.getClass().getResource("resources/bg.jpg")));
-	JLabel lbl1 = new JLabel();
-	JLabel lbl2 = new JLabel();
-	JLabel lbl3 = new JLabel();
-	JLabel lbl4 = new JLabel();
-	JLabel lblImage = new JLabel();
-	JButton btn = new JButton();
-	ImageIcon about_icon = new ImageIcon(createImage("resources/icon.png", "JNotes"));
+	final JLabel filler = new JLabel();
+	final JLabel lbl1 = new JLabel();
+	final JLabel lbl2 = new JLabel();
+	final JLabel lbl3 = new JLabel();
+	final JLabel lbl4 = new JLabel();
+	final JLabel lblImage = new JLabel();
+	final JButton btn = new JButton();
+	final Img notesIcon = new Img("icon.png");
+	final ImageIcon about_icon = new ImageIcon(createImage("resources/icon.png", "JNotes"));
 	
 	About() {
 		lbl1.setText("JNotes v" + Main.version);
@@ -53,19 +54,22 @@ public class About extends JDialog {
 		lblImage.setBounds(10, 0, 150, 150);
 		
 		btn.setText("Close");
-		btn.setBounds(320, 240, 80, 25);
+		btn.setBounds(310, 240, 80, 25);
 		
 		setPreferredSize(new Dimension(425, 286));
 		this.setLocationRelativeTo(null);
 
-		this.add(lbl1);
-		this.add(lbl2);
-		this.add(lbl3);
-		this.add(lbl4);
-		this.add(lblImage);
-		this.add(btn);
-		this.getContentPane().add(background);
-		this.setUndecorated(true);
+		
+		this.add(filler);
+		this.setIconImage(notesIcon.img);
+		filler.add(lbl1);
+		filler.add(lbl2);
+		filler.add(lbl3);
+		filler.add(lbl4);
+		filler.add(lblImage);
+		filler.add(btn);
+		this.setSize(400,300);
+		this.setResizable(false);
 		this.pack();
 		
 		btn.addActionListener(new ActionListener() {
