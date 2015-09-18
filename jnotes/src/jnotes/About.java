@@ -30,30 +30,30 @@ public class About extends JDialog {
 	
 	About() {
 		lbl1.setText("JNotes v" + Main.version);
-		lbl1.setFont(new Font("Verdana", Font.PLAIN, 22));
+		lbl1.setFont(new Font("Courier", Font.PLAIN, 22));
 		lbl1.setForeground(Color.DARK_GRAY);
 		lbl1.setBounds(190, 30, 400, 20);
 		
 		lbl2.setText("Author:  Denis Salmanovich");
-		lbl2.setFont(new Font("Verdana", Font.TRUETYPE_FONT, 13));
+		lbl2.setFont(new Font("Courier", Font.TRUETYPE_FONT, 13));
 		lbl2.setForeground(Color.BLACK);
 		lbl2.setBounds(170, 80, 400, 20);
 		
 		lbl3.setText("JNotes Web site:");
-		lbl3.setFont(new Font("Verdana", Font.TRUETYPE_FONT, 13));
+		lbl3.setFont(new Font("Courier", Font.TRUETYPE_FONT, 13));
 		lbl3.setForeground(Color.BLACK);
-		lbl3.setBounds(140, 110, 110, 20);
+		lbl3.setBounds(200, 140, 150, 20);
 		
 		lbl4.setText("http://os.vc/jnotes");
-		lbl4.setFont(new Font("Verdana", Font.TRUETYPE_FONT, 13));
+		lbl4.setFont(new Font("Courier", Font.TRUETYPE_FONT, 13));
 		lbl4.setForeground(Color.BLUE);
-		lbl4.setBounds(260, 110, 120, 20);
+		lbl4.setBounds(190, 160, 170, 20);
 		
 		lblImage.setIcon(about_icon);
 		lblImage.setBounds(10, 0, 150, 150);
 		
 		btn.setText("Close");
-		btn.setBounds(320, 240, 80, 30);
+		btn.setBounds(320, 240, 80, 25);
 		
 		setPreferredSize(new Dimension(425, 286));
 		this.setLocationRelativeTo(null);

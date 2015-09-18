@@ -151,8 +151,22 @@ public class Note extends JPanel {
 	
 	public void createNewNote(String noteFileName) {
 		final File newNote = new File(Main.userNotesPath+"/data/"+noteFileName);
+		final File settingsFile = new File(Main.userNotesPath+"/jnotes_settings.ini");
+		String defaultNoteColor = null;
 		
-		data="noname note\n-154\n600\n330\n500\n350\n";
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(settingsFile));
+			try {
+				defaultNoteColor = br.readLine();
+				br.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		data="noname note\n"+defaultNoteColor+"\n600\n330\n500\n350\n";
 		
 		FileWriter fileWriter;
 		try {
