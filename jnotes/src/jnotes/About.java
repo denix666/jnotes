@@ -54,7 +54,7 @@ public class About extends JDialog {
 		lblImage.setBounds(10, 0, 150, 150);
 		
 		btn.setText("Close");
-		btn.setBounds(310, 240, 80, 25);
+		btn.setBounds(310, 220, 80, 25);
 		
 		setPreferredSize(new Dimension(425, 286));
 		this.setLocationRelativeTo(null);
