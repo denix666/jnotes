@@ -33,6 +33,8 @@ public class Options extends JFrame {
 	
 	Options() {
 
+		Main.initDataDir();
+		
 		if (!settingsFile.isFile()) {
 			createDefaultSettings();
 		}

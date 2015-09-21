@@ -9,7 +9,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
 	final static String userNotesPath = System.getProperty("user.home")+"/.jnotes";
 	final static String userNotesDataPath = System.getProperty("user.home")+"/.jnotes/data";
-	final static String version = "0.8";
+	final static String version = "0.9";
 	
 	final static Tray tray = new Tray();
 	
@@ -17,8 +17,6 @@ public class Main {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	    UIManager.put("swing.boldMetal", Boolean.FALSE);
 	    
-		initDataDir();
-
         Tray.firstPartOfMenu();
         Tray.dynamicMenu();
         Tray.secondPartOfMenu();
