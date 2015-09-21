@@ -218,9 +218,11 @@ public class Note extends JPanel {
             			null, 
             			"Pick a Color", 
             			Color.YELLOW);
-            	display.setBackground(selectedColor);
-            	saveNote(noteFile);
-        		recreatePopupMenu();
+            	if (selectedColor != null) {
+	            	display.setBackground(selectedColor);
+	            	saveNote(noteFile);
+	        		recreatePopupMenu();
+            	}
             }
         });
 		notePopup.add(setColor);

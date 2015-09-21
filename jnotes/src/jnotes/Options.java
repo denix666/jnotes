@@ -82,10 +82,12 @@ public class Options extends JFrame {
             			null, 
             			"Pick a Color", 
             			Color.YELLOW);
-            	btnColor.setBackground(selectedColor);
-            	int newColor = btnColor.getBackground().getRGB();
-            	defaultNoteColor = Integer.toString(newColor);
-            	saveSettings();
+            	if (selectedColor != null) {
+            		btnColor.setBackground(selectedColor);
+            		int newColor = btnColor.getBackground().getRGB();
+            		defaultNoteColor = Integer.toString(newColor);
+            		saveSettings();
+            	}
             }
         });
 		
