@@ -103,6 +103,7 @@ public class Note extends JPanel {
 	    y = Integer.parseInt(framePosY);
 	    frame.setLocation(x, y);
 	    frame.setVisible(true);
+	    frame.toFront();
 	    
 
 	    frame.addWindowListener(new WindowAdapter() {
