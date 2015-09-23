@@ -1,6 +1,7 @@
 package jnotes;
 
 import java.awt.AWTException;
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -33,6 +35,7 @@ public class Tray {
 	final static ImageIcon hide_icon = new ImageIcon(createImage("resources/hide_icon.png", "Hide menu"));
 	final static About about = new About();
 	final static Options options = new Options();
+	static int foundFrame;
 	
 	Tray() {
 		trayIcon.setToolTip("JNotes v" + Main.version);
@@ -167,7 +170,26 @@ public class Tray {
 			            		// Новое окошко с параметром имени заметки
 								UIManager.put("swing.boldMetal", Boolean.FALSE);
 								popup.setVisible(false);
-								new Note(menuItem.getName());
+								
+								String noteTitle = noteTitle(menuItem.getName());
+								Frame[] activeframes = Frame.getFrames();
+								boolean isVisible = false;
+
+								for (int i=0; i < activeframes.length; i++) {
+									String frameTitle = activeframes[i].getTitle();
+									if (noteTitle.equals(frameTitle)) {
+										isVisible = activeframes[i].isVisible();
+										foundFrame = i;
+									}
+								}
+								
+								if (!isVisible) {
+									// Новое окошко с параметром имени файла заметки
+									new Note(menuItem.getName());
+								} else {
+									// Если окошко уже открыто, только показываем его
+									activeframes[foundFrame].toFront();
+								}
 			            	}
 			            });
 						popup.add(menuItem);
@@ -179,6 +201,23 @@ public class Tray {
 				}
     		}
     	}
+	}
+	
+	public static String noteTitle(String fileName) {
+		File file = new File(Main.userNotesPath+"/data/"+fileName);
+		String title = null;
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			try {
+				title = br.readLine();
+				br.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		return title;
 	}
 	
 	// Obtain the image URL

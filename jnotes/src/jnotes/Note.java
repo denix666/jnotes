@@ -166,7 +166,7 @@ public class Note extends JPanel {
 			e1.printStackTrace();
 		}
 		
-		data="noname note\n"+defaultNoteColor+"\n600\n330\n500\n350\n";
+		data=noteFileName+"\n"+defaultNoteColor+"\n600\n330\n500\n350\n";
 		
 		FileWriter fileWriter;
 		try {
