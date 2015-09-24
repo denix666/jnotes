@@ -87,6 +87,7 @@ public class Note extends JPanel {
 	    middlePanel.setBorder(new TitledBorder(new EtchedBorder(),""));
 	    middlePanel.setLayout(new BorderLayout());
 	    display.setEditable(true);
+	    display.setLineWrap(true);
 	    display.setBackground(Color.decode(noteColor));
 	    //display.setBackground(Color.ORANGE);
 	    JScrollPane scroll = new JScrollPane(display);
