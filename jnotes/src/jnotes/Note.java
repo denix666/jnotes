@@ -88,8 +88,8 @@ public class Note extends JPanel {
 	    middlePanel.setLayout(new BorderLayout());
 	    display.setEditable(true);
 	    display.setLineWrap(true);
+	    display.setWrapStyleWord(true);
 	    display.setBackground(Color.decode(noteColor));
-	    //display.setBackground(Color.ORANGE);
 	    JScrollPane scroll = new JScrollPane(display);
 	    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	    middlePanel.add (scroll,BorderLayout.CENTER);
