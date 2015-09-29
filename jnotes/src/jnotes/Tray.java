@@ -189,6 +189,7 @@ public class Tray {
 								} else {
 									// Если окошко уже открыто, только показываем его
 									activeframes[foundFrame].toFront();
+									activeframes[foundFrame].setVisible(true);
 								}
 			            	}
 			            });
