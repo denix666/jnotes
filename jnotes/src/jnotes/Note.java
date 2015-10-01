@@ -59,6 +59,13 @@ public class Note extends JPanel {
 	UndoManager undoManager = new UndoManager();
 	JMenuItem undo = new JMenuItem("Undo",new ImageIcon(this.getClass().getResource("resources/undo_icon.png")));
 	JMenuItem redo = new JMenuItem("Redo",new ImageIcon(this.getClass().getResource("resources/redo_icon.png")));
+	JMenuItem renameNote = new JMenuItem("Rename note",new ImageIcon(this.getClass().getResource("resources/rename_icon.png")));
+	JMenuItem onTopNote = new JMenuItem("Always on top",new ImageIcon(this.getClass().getResource("resources/always_on_top_icon.png")));
+	JMenuItem setColor = new JMenuItem("Set color",new ImageIcon(this.getClass().getResource("resources/color_icon.png")));
+	JMenuItem cutToClipboard = new JMenuItem("Cut",new ImageIcon(this.getClass().getResource("resources/cut_icon.png")));
+	JMenuItem deleteNote = new JMenuItem("Delete note",new ImageIcon(this.getClass().getResource("resources/delete_icon.png")));
+	JMenuItem copyToClipboard = new JMenuItem("Copy",new ImageIcon(this.getClass().getResource("resources/copy_icon.png")));
+	JMenuItem pasteFromClipboard = new JMenuItem("Paste",new ImageIcon(this.getClass().getResource("resources/paste_icon.png")));
 	
 	public Note(final String noteFileName) {
 
@@ -216,7 +223,6 @@ public class Note extends JPanel {
 	public void createPopupMenu(final String noteFile) {
 		final File note = new File(Main.userNotesPath+"/data/"+noteFile);
 		
-		JMenuItem renameNote = new JMenuItem("Rename note",new ImageIcon(this.getClass().getResource("resources/rename_icon.png")));
 		renameNote.setMnemonic(KeyEvent.VK_R);
 		renameNote.getAccessibleContext().setAccessibleDescription("Rename note");
 		renameNote.addActionListener(new ActionListener() {
@@ -242,7 +248,6 @@ public class Note extends JPanel {
 		
 		notePopup.addSeparator(); //======================================
 		
-		JMenuItem onTopNote = new JMenuItem("Always on top",new ImageIcon(this.getClass().getResource("resources/always_on_top_icon.png")));
 		onTopNote.setMnemonic(KeyEvent.VK_A);
 		onTopNote.getAccessibleContext().setAccessibleDescription("Always on top");
 		onTopNote.addActionListener(new ActionListener() {
@@ -254,7 +259,6 @@ public class Note extends JPanel {
 		
 		notePopup.addSeparator(); //======================================
 		
-		JMenuItem setColor = new JMenuItem("Set color",new ImageIcon(this.getClass().getResource("resources/color_icon.png")));
 		setColor.setMnemonic(KeyEvent.VK_S);
 		setColor.getAccessibleContext().setAccessibleDescription("Set color");
 		setColor.addActionListener(new ActionListener() {
@@ -306,7 +310,6 @@ public class Note extends JPanel {
 		
 		notePopup.addSeparator(); //======================================
 		
-		JMenuItem cutToClipboard = new JMenuItem("Cut",new ImageIcon(this.getClass().getResource("resources/cut_icon.png")));
 		cutToClipboard.setMnemonic(KeyEvent.VK_T);
 		cutToClipboard.getAccessibleContext().setAccessibleDescription("Cut");
 		cutToClipboard.addActionListener(new ActionListener() {
@@ -323,7 +326,6 @@ public class Note extends JPanel {
         });
 		notePopup.add(cutToClipboard);
 		
-		JMenuItem copyToClipboard = new JMenuItem("Copy",new ImageIcon(this.getClass().getResource("resources/copy_icon.png")));
 		copyToClipboard.setMnemonic(KeyEvent.VK_C);
 		copyToClipboard.getAccessibleContext().setAccessibleDescription("Copy");
 		copyToClipboard.addActionListener(new ActionListener() {
@@ -335,7 +337,6 @@ public class Note extends JPanel {
         });
 		notePopup.add(copyToClipboard);
 		
-		JMenuItem pasteFromClipboard = new JMenuItem("Paste",new ImageIcon(this.getClass().getResource("resources/paste_icon.png")));
 		pasteFromClipboard.setMnemonic(KeyEvent.VK_P);
 		pasteFromClipboard.getAccessibleContext().setAccessibleDescription("Paste");
 		pasteFromClipboard.addActionListener(new ActionListener() {
@@ -359,8 +360,7 @@ public class Note extends JPanel {
 		notePopup.add(pasteFromClipboard);
 		
 		notePopup.addSeparator(); //======================================
-		
-		JMenuItem deleteNote = new JMenuItem("Delete note",new ImageIcon(this.getClass().getResource("resources/delete_icon.png")));
+
 		deleteNote.setMnemonic(KeyEvent.VK_D);
 		deleteNote.getAccessibleContext().setAccessibleDescription("Delete note");
 		deleteNote.addActionListener(new ActionListener() {

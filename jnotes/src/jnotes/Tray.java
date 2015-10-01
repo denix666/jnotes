@@ -83,7 +83,7 @@ public class Tray {
             }
         });
 		popup.add(newNote);
-		popup.addSeparator();
+		popup.addSeparator(); //======================================
 	}
 	
 	public static void secondPartOfMenu() {
@@ -98,7 +98,7 @@ public class Tray {
             }
         });
         popup.add(hideItem);
-        popup.addSeparator();
+        popup.addSeparator(); //======================================
         
 		JMenuItem optionsItem = new JMenuItem("Options", options_icon);
 		optionsItem.setMnemonic(KeyEvent.VK_P);
@@ -112,7 +112,7 @@ public class Tray {
             }
         });
 		popup.add(optionsItem);
-		popup.addSeparator();
+		popup.addSeparator(); //======================================
         
 		JMenuItem aboutItem = new JMenuItem("About", about_icon);
 		aboutItem.setMnemonic(KeyEvent.VK_P);
@@ -126,7 +126,7 @@ public class Tray {
             }
         });
         popup.add(aboutItem);
-        popup.addSeparator();
+        popup.addSeparator(); //======================================
         
 		JMenuItem exitItem = new JMenuItem("Exit", exit_icon);
 		exitItem.setMnemonic(KeyEvent.VK_P);

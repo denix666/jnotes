@@ -13,12 +13,12 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 
 @SuppressWarnings("serial")
-public class About extends JDialog {
+public class About extends JFrame {
 	final JLabel filler = new JLabel();
 	final JLabel lbl1 = new JLabel();
 	final JLabel lbl2 = new JLabel();
@@ -70,6 +70,7 @@ public class About extends JDialog {
 		filler.add(btn);
 		this.setSize(400,300);
 		this.setResizable(false);
+		this.setLocationRelativeTo(null);
 		this.pack();
 		
 		btn.addActionListener(new ActionListener() {
