@@ -9,7 +9,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
 	final static String userNotesPath = System.getProperty("user.home")+"/.jnotes";
 	final static String userNotesDataPath = System.getProperty("user.home")+"/.jnotes/data";
-	final static String version = "1.4";
+	final static String version = "1.5";
 	
 	final static Tray tray = new Tray();
 	

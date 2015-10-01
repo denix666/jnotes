@@ -36,6 +36,10 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.UndoManager;
 
 
 @SuppressWarnings("serial")
@@ -52,6 +56,9 @@ public class Note extends JPanel {
 	int x,y = 0;
 	Color displayColor = null;
 	Img frameIcon = new Img("icon.png");
+	UndoManager undoManager = new UndoManager();
+	JMenuItem undo = new JMenuItem("Undo",new ImageIcon(this.getClass().getResource("resources/undo_icon.png")));
+	JMenuItem redo = new JMenuItem("Redo",new ImageIcon(this.getClass().getResource("resources/redo_icon.png")));
 	
 	public Note(final String noteFileName) {
 
@@ -120,6 +127,7 @@ public class Note extends JPanel {
 	    	}
 	    };
 
+
 	    display.getDocument().addDocumentListener(documentListener);
 
 	    frame.addWindowListener(new WindowAdapter() {
@@ -147,6 +155,13 @@ public class Note extends JPanel {
 	            	notePopup.show(e.getComponent(), e.getX(), e.getY());
 	            }
 	        }
+	    });
+	    
+	    display.getDocument().addUndoableEditListener(new UndoableEditListener() {
+	          public void undoableEditHappened(UndoableEditEvent e) {
+	              undoManager.addEdit(e.getEdit());
+	              updateButtons();
+	          }
 	    });
 	}
 	
@@ -225,7 +240,7 @@ public class Note extends JPanel {
         });
 		notePopup.add(renameNote);
 		
-		notePopup.addSeparator();
+		notePopup.addSeparator(); //======================================
 		
 		JMenuItem onTopNote = new JMenuItem("Always on top",new ImageIcon(this.getClass().getResource("resources/always_on_top_icon.png")));
 		onTopNote.setMnemonic(KeyEvent.VK_A);
@@ -237,7 +252,7 @@ public class Note extends JPanel {
         });
 		notePopup.add(onTopNote);
 		
-		notePopup.addSeparator();
+		notePopup.addSeparator(); //======================================
 		
 		JMenuItem setColor = new JMenuItem("Set color",new ImageIcon(this.getClass().getResource("resources/color_icon.png")));
 		setColor.setMnemonic(KeyEvent.VK_S);
@@ -257,7 +272,39 @@ public class Note extends JPanel {
         });
 		notePopup.add(setColor);
 		
-		notePopup.addSeparator();
+		notePopup.addSeparator(); //======================================
+		
+		undo.setMnemonic(KeyEvent.VK_U);
+		undo.getAccessibleContext().setAccessibleDescription("Undo");
+		undo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	try {
+                    undoManager.undo();
+            	} catch (CannotRedoException cre) {
+                    cre.printStackTrace();
+            	}
+            	updateButtons();
+            }
+        });
+		notePopup.add(undo);
+		undo.setEnabled(false);
+		
+		redo.setMnemonic(KeyEvent.VK_O);
+		redo.getAccessibleContext().setAccessibleDescription("Redo");
+		redo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	try {
+                    undoManager.redo();
+            	} catch (CannotRedoException cre) {
+                    cre.printStackTrace();
+            	}
+            	updateButtons();
+            }
+        });
+		notePopup.add(redo);
+		redo.setEnabled(false);
+		
+		notePopup.addSeparator(); //======================================
 		
 		JMenuItem cutToClipboard = new JMenuItem("Cut",new ImageIcon(this.getClass().getResource("resources/cut_icon.png")));
 		cutToClipboard.setMnemonic(KeyEvent.VK_T);
@@ -311,8 +358,7 @@ public class Note extends JPanel {
         });
 		notePopup.add(pasteFromClipboard);
 		
-		notePopup.addSeparator();
-		
+		notePopup.addSeparator(); //======================================
 		
 		JMenuItem deleteNote = new JMenuItem("Delete note",new ImageIcon(this.getClass().getResource("resources/delete_icon.png")));
 		deleteNote.setMnemonic(KeyEvent.VK_D);
@@ -333,6 +379,11 @@ public class Note extends JPanel {
             }
         });
 		notePopup.add(deleteNote);
+	}
+	
+	public void updateButtons() {
+		undo.setEnabled(undoManager.canUndo());
+		redo.setEnabled(undoManager.canRedo());
 	}
 	
 	public void recreatePopupMenu() {
